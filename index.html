@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfólio - Projetos com Imagens</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial; transition:background 0.3s,color 0.3s}
+    
+    /* Tema claro */
+    body.light{background:#f7f7f7;color:#222}
+    body.light .sidebar, 
+    body.light .hero,
+    body.light .presentation,
+    body.light .overlay-content,
+    body.light footer{background:#fff;border:1px solid #150101;color:#222}
+    body.light .nav-item{background:linear-gradient(180deg,#adaaaa,#f0f0f0)}
+
+    /* Tema escuro */
+    body.dark{background:#0f0f0f;color:#eee}
+    body.dark .sidebar, 
+    body.dark .hero,
+    body.dark .presentation,
+    body.dark .overlay-content,
+    body.dark footer{background:#1a1a1a;border:1px solid #333;color:#eee}
+    body.dark .nav-item{background:linear-gradient(180deg,#222,#111)}
+
+    .app{display:grid;grid-template-columns:260px 1fr;min-height:100vh;gap:24px;padding:24px}
+    .sidebar{border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:10px;height:calc(100vh - 48px);overflow:auto}
+    .brand{font-weight:700;font-size:18px;padding:8px 4px;text-align:center}
+
+    .nav-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+    .nav-item{padding:12px 10px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;transition:0.2s}
+    .nav-item.big{font-size:20px;padding:18px 10px}
+    .nav-item:hover{box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+
+    .topbar{position:fixed;top:10px;right:20px;display:flex;gap:10px;align-items:center;z-index:1000}
+    .lang-switch,.theme-toggle{border:1px solid #ddd;padding:6px 8px;border-radius:6px;cursor:pointer;background:#fff}
+    body.dark .lang-switch, body.dark .theme-toggle{background:#222;border:1px solid #444;color:#eee}
+
+    .main{display:flex;flex-direction:column;gap:12px}
+    .hero{border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px}
+    .hero-top{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+    .avatar{width:160px;height:160px;border-radius:50%;overflow:hidden}
+    .avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+    .hero-info h1{font-size:22px;margin-bottom:6px}
+    .presentation{border-radius:12px;padding:18px;min-height:140px}
+
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:1000;padding:20px}
+    .overlay-content{border-radius:12px;max-width:800px;width:100%;padding:20px;position:relative;overflow-y:auto;max-height:90vh}
+    .overlay.show{display:flex}
+    .overlay-content button{position:absolute;top:10px;right:10px;padding:5px 10px;border-radius:6px;cursor:pointer;border:none}
+
+    /* Projetos */
+    .project-section{margin-top:20px}
+    .project{margin-bottom:20px}
+    .project img{width:100%;max-width:500px;border-radius:8px;margin-top:10px}
+    .project p{margin-top:5px}
+
+    /* Chat */
+    .chat-window{display:flex;flex-direction:column;align-items:center;text-align:center}
+    .chat-window input{width:100%;max-width:400px;padding:10px;margin:10px 0;border:1px solid #aaa;border-radius:6px}
+    .chat-response{background:#eee;padding:12px;border-radius:8px;margin-top:10px;max-width:400px}
+    body.dark .chat-response{background:#333;color:#eee}
+
+    /* Jogo */
+    #pingPong{border:2px solid #000;display:block;margin:10px auto;background:#000}
+
+    /* Footer redes sociais */
+    footer{margin-top:20px;padding:15px;text-align:center;border-radius:8px}
+    .socials{display:flex;gap:15px;justify-content:center;flex-wrap:wrap}
+    .socials a{text-decoration:none;font-weight:600}
+    body.light .socials a{color:#222}
+    body.dark .socials a{color:#eee}
+
+    /* Responsividade */
+    @media (max-width:768px){
+      .app{grid-template-columns:1fr;padding:12px}
+      .sidebar{flex-direction:row;height:auto;justify-content:center}
+      .nav-list{flex-direction:row;flex-wrap:wrap;justify-content:center}
+      .hero-top{justify-content:center;text-align:center}
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="topbar">
+    <div class="lang-switch" id="langSwitch">PT | EN</div>
+    <div class="theme-toggle" id="themeToggle">🌙</div>
+  </div>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"></div>
+      <nav class="nav-list" id="navList">
+        <div class="nav-item" data-content="chat">CHAT</div>
+        <div class="nav-item" data-content="Projetos UX">EU NO UX/UI</div>
+        <div class="nav-item" data-content="Projetos Backend">EU NO BACKEND</div>
+        <div class="nav-item" data-content="Projetos Frontend">EU NO FRONTEND</div>
+        <div class="nav-item" data-content="Currículo">MEU CURRICULO</div>
+        <div class="nav-item big" data-content="game">DESAFIO</div>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <section class="hero">
+        <div class="hero-top">
+          <div class="avatar">
+            <img src="IMAGE PROFILE.jpg" alt="Foto de Juraci">
+          </div>
+          <div class="hero-info">
+            <h1 id="nome">J N Tito Neto</h1>
+            <p id="descricao">Estudante de Engenharia de Software • Desenvolvedor Fullstack</p>
+          </div>
+        </div>
+        <div class="presentation">
+          <h2 id="apresentacaoTitulo">Apresentação</h2>
+          <p id="apresentacaoTexto">Eu sou um sonhador, um visionário, alguém que cria mundos em sua mente, que cria histórias em segundos e que ama navegar pelo desconhecido concebendo uma ideia mais insana que a outra. Mas, certamente, ser platônico demais foi o meu erro. Antes de conhecer de fato a programação eu achava que tudo era fácil, que tudo que eu vislumbrava poderia ser materializado no dia seguinte por mim, não que não seja, não obstante, não posso ser tão pueril assim, tudo tem um meio e um fim, fundamentos, estruturas, conceitos e axiomas. O materialismo de apenas uma linha de código me mostrou que para dar vida às minhas ideias eu precisarei primeiro colocar a mão na massa e, sem sombra de dúvidas, terei que me esforçar ao máximo para dominar a programação orientada a objetos.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p>Minhas redes sociais</p>
+        <div class="socials">
+          <a href="https://github.com/Magneto1000" target="_blank" >GitHub</a>
+          <a href="https://www.linkedin.com/in/j-tito-neto-742385126/" target="_blank">LinkedIn</a>
+          <a href="mailto:titojneto@gmail.com" target="_blank" target="_blank">Email</a>
+          <a href="https://www.tiktok.com/@printdevjtitoneto?is_from_webapp=1&sender_device=pc" target="_blank">TikTok</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="overlay-content" id="overlayContent">
+      <button onclick="closeOverlay()">FECHAR</button>
+      <div id="overlayText"></div>
+    </div>
+  </div>
+
+  <script>
+    const overlay=document.getElementById('overlay');
+    const overlayText=document.getElementById('overlayText');
+    document.querySelectorAll('.nav-item').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        overlay.classList.add('show');
+        switch(btn.dataset.content){
+          case "chat": abrirChat(); break;
+          case "game": abrirGame(); break;
+          case "Currículo":
+            overlayText.innerHTML=`
+              <h2>Currículo</h2>
+              <p><strong>Formação:</strong> Engenharia de Software (4º período)</p>
+              <p><strong>Experiência:</strong> Projetos em Python, Frontend e UX</p>
+              <p><a href="https://docs.google.com/document/d/1fugO-9jswBO_T2BRWygyC-qFXhPBlLQs/edit" target="_blank">📄 Ver Currículo em PDF</a></p>`;
+            break;
+
+          case "Projetos UX":
+            overlayText.innerHTML=`
+              <h2>Projetos UX</h2>
+              <p>Interfaces intuitivas e design centrado no usuário.</p>
+              <div class="project-section">
+                <div class="project">
+                  <h3>Projeto 1 – App Educacional</h3>
+                  <p>Protótipo no Figma para ensino interativo de ciências.</p>
+                  <img src="ux1.jpg" alt="Imagem do Projeto 1 UX">
+                </div>
+                <div class="project">
+                  <h3>Projeto 2 – Dashboard de Saúde</h3>
+                  <p>Interface para monitoramento de dados biométricos.</p>
+                  <img src="ux2.jpg" alt="Imagem do Projeto 2 UX">
+                </div>
+                <div class="project">
+                  <h3>Projeto 3 – Plataforma CityZem</h3>
+                  <p>Design voltado à conscientização política da sociedade.</p>
+                  <img src="ux3.jpg" alt="Imagem do Projeto 3 UX">
+                </div>
+              </div>`;
+            break;
+
+          case "Projetos Backend":
+            overlayText.innerHTML=`
+              <h2>Projetos Backend</h2>
+              <p>APIs robustas e sistemas com autenticação segura.</p>
+              <div class="project-section">
+                <div class="project">
+                  <h3>Projeto 1 – API de Tarefas</h3>
+                  <p>REST API em Node.js com MongoDB e autenticação JWT.</p>
+                  <img src="backend1.jpg" alt="Imagem do Projeto 1 Backend">
+                </div>
+                <div class="project">
+                  <h3>Projeto 2 – Sistema de Aluguel</h3>
+                  <p>Aplicação Python com banco de dados SQLite e interface Tkinter.</p>
+                  <img src="backend2.jpg" alt="Imagem do Projeto 2 Backend">
+                </div>
+                <div class="project">
+                  <h3>Projeto 3 – API Clean City</h3>
+                  <p>Integração de dados ambientais para o projeto Clean City.</p>
+                  <img src="backend3.jpg" alt="Imagem do Projeto 3 Backend">
+                </div>
+              </div>`;
+            break;
+
+          case "Projetos Frontend":
+            overlayText.innerHTML=`
+              <h2>Projetos Frontend</h2>
+              <p>Experiências interativas com HTML, CSS e JavaScript.</p>
+              <div class="project-section">
+                <div class="project">
+                  <h3>Projeto 1 – Portfólio Interativo</h3>
+                  <p>Site pessoal com animações, modo escuro e multilíngue.</p>
+                  <img src="frontend1.jpg" alt="Imagem do Projeto 1 Frontend">
+                </div>
+                <div class="project">
+                  <h3>Projeto 2 – Sistema Solar 2D</h3>
+                  <p>Simulador educativo feito em JavaScript e Pygame.</p>
+                  <img src="frontend2.jpg" alt="Imagem do Projeto 2 Frontend">
+                </div>
+                <div class="project">
+                  <h3>Projeto 3 – Aplicativo Gamificado</h3>
+                  <p>Interface para app Android de gerenciamento de tarefas com pontos e níveis.</p>
+                  <img src="frontend3.jpg" alt="Imagem do Projeto 3 Frontend">
+                </div>
+              </div>`;
+            break;
+
+          default:
+            overlayText.textContent=btn.dataset.content;
+        }
+      });
+    });
+
+    function closeOverlay(){overlay.classList.remove('show')}
+
+    // Chat funcional
+    function abrirChat(){
+      overlayText.innerHTML=`
+        <div class="chat-window">
+          <h2>Chat</h2>
+          <p>Faça uma pergunta sobre mim:</p>
+          <input type="text" id="userQuestion" placeholder="Pergunte aqui..." 
+            onkeypress="if(event.key==='Enter') responderPergunta()">
+          <div id="chatResposta" class="chat-response"></div>
+        </div>`;
+    }
+
+    function responderPergunta(){
+      const pergunta=document.getElementById('userQuestion').value.toLowerCase();
+      const respostaEl=document.getElementById('chatResposta');
+      let resposta="Desculpe, não entendi. Pergunte sobre minha formação, projetos ou contatos.";
+
+       if (pergunta.includes("formação") || pergunta.includes("faculdade")) {
+        resposta = "Estou cursando Engenharia de Software (4º período) e fiz cursos como Google Project Management e Python for Everybody do MIT.";
+      } else if (pergunta.includes("projetos")) {
+        resposta = "Desenvolvi simuladores educacionais em Python e um jogo interativo sobre o Sistema Solar. Também estou trabalhando no projeto Clean City e em estudos sobre a Mata Atlântica.";
+      } else if (pergunta.includes("contato") || pergunta.includes("email")) {
+        resposta = "Você pode entrar em contato pelo email titojneto@gmail.com ou me encontrar no LinkedIn, GitHub, Instagram e TikTok.";
+      } else if (pergunta.includes("nome")) {
+        resposta = "Meu nome é John Tyto, prazer em te conhecer!";
+      } else if (pergunta.includes("idade")) {
+        resposta = "Ninguém te falou que é feio perguntar a idade dos outros? Mas beleza, para você eu conto... Eu tenho 33 anos, nasci em 1992.";
+      } else if (pergunta.includes("hobbies") || pergunta.includes("interesses")) {
+        resposta = "Gosto de tecnologia, xadrez programação, jogos e estou sempre aprendendo coisas novas!";
+      } else if (pergunta.includes("tecnologias") || pergunta.includes("linguagens")) {
+        resposta = "Trabalho com HTML, CSS, JavaScript, Python e estou aprendendo mais sobre desenvolvimento de software.";
+      } else if (pergunta.includes("experiência") || pergunta.includes("trabalho")) {
+        resposta = "Tenho experiência em projetos educacionais e desenvolvimento de jogos simples. Estou sempre buscando novos desafios!";
+      } else if (pergunta.includes("skills") || pergunta.includes("habilidades")) {
+        resposta = "Minhas principais habilidades incluem programação em Python, gerenciamento de projetos, UX e design de jogos.";
+      } else if (pergunta.includes("projetos") || pergunta.includes("trabalhos")) {
+        resposta = "Desenvolvi simuladores educacionais em Python e um jogo interativo sobre o Sistema Solar. Também estou trabalhando no projeto Clean City e em estudos sobre a Mata Atlântica.";
+      } else if (pergunta.includes("futuro") || pergunta.includes("planos")) {
+        resposta = "Estou focado em concluir minha graduação e expandir minhas habilidades em desenvolvimento de software e gerenciamento de projetos.";
+      } else if (pergunta.includes("empresa") || pergunta.includes("Ambições") || pergunta.includes("ambição")) {
+        resposta = "Bem, eu acredito que tenho muito a oferecer, sou uma pessoa criativa em busca de oportunidades de fazer história, por isso, falemos de salários depois, na hora da proposta. O que acha?";
+      } else if (pergunta.includes("idioma") || pergunta.includes("inglês") || pergunta.includes("línguas")) {
+        resposta = "Estudo inglês já há algum tempo, pode-se dizer que leio, escrevo e entendo bem. Segundo o Duolingo, eu sou INTERMEDIÁRIO!";
+      } else if (pergunta.includes("pontos negativos") || pergunta.includes("defeitos")) {
+        resposta = "Acredito que um dos meus pontos negativos é a falta de experiência prática em ambientes corporativos e talvez eu me superestime um pouco. Estou sempre buscando novos desafios!";
+      } else if (pergunta.includes("sociais") || pergunta.includes("pontos fortes")) {
+        resposta = "Minhas principais habilidades sociais são assustadoras. Não quero me gabar, mas sou um líder nato (acho que estou me superestimando novamente!). sou organizado e muito hábil em resolver conflitos e motivar meus companheiros de trabalho e a mim mesmo. Sou bom em gestão de tempo também, anote aí";
+      } else if (pergunta.includes("familia") || pergunta.includes("filhos") || pergunta.includes("casado") || pergunta.includes("relacionamento")) {
+        resposta = "Sou casado e possuo uma filha. Minha esposa se chama Thayná e minha filha Julia.";
+      } else if (pergunta.includes("Salário") || pergunta.includes("salário") || pergunta.includes("salarial") || pergunta.includes("remuneração")) {
+        resposta = "Eu gostaria de dizer que aceito quanto você estiver disposto a pagar, mas como tenho uma família para sustentar, acredito que a média do mercado para a minha vaga, ou negociamos.";
+      }
+
+      respostaEl.textContent=resposta;
+    }
+
+    // Game
+    function abrirGame(){
+      overlayText.innerHTML=`
+        <h2>Ping Pong</h2>
+        <canvas id="pingPong" width="400" height="250"></canvas>
+        <div id="scoreBoard">0 : 0</div>`;
+      iniciarPingPong();
+    }
+
+    function iniciarPingPong(){
+      const canvas=document.getElementById('pingPong');
+      const ctx=canvas.getContext('2d');
+      let paddleHeight=40,paddleWidth=8;
+      let playerY=canvas.height/2-paddleHeight/2;
+      let aiY=playerY;
+      let ballX=canvas.width/2,ballY=canvas.height/2;
+      let ballSize=6,ballSpeedX=2,ballSpeedY=2;
+      let playerScore=0,aiScore=0,active=false;
+      function draw(){
+        ctx.fillStyle="black";ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle="white";
+        ctx.fillRect(10,playerY,paddleWidth,paddleHeight);
+        ctx.fillRect(canvas.width-10-paddleWidth,aiY,paddleWidth,paddleHeight);
+        ctx.beginPath();ctx.arc(ballX,ballY,ballSize,0,Math.PI*2);ctx.fill();
+      }
+      function update(){
+        if(!active)return;
+        ballX+=ballSpeedX;ballY+=ballSpeedY;
+        if(ballY<0||ballY>canvas.height) ballSpeedY*=-1;
+        let aiCenter=aiY+paddleHeight/2;
+        if(aiCenter<ballY) aiY+=2; else aiY-=2;
+        if(ballX-ballSize<10+paddleWidth && ballY>playerY&&ballY<playerY+paddleHeight) ballSpeedX*=-1;
+        if(ballX+ballSize>canvas.width-10-paddleWidth && ballY>aiY&&ballY<aiY+paddleHeight) ballSpeedX*=-1;
+        if(ballX<0){aiScore++;resetBall();}
+        if(ballX>canvas.width){playerScore++;resetBall();}
+        document.getElementById("scoreBoard").textContent=`${playerScore} : ${aiScore}`;
+      }
+      function resetBall(){ballX=canvas.width/2;ballY=canvas.height/2;ballSpeedX*=-1}
+      setInterval(()=>{update();draw();},1000/60);
+      document.addEventListener("mousemove",e=>{
+        let rect=canvas.getBoundingClientRect();
+        playerY=e.clientY-rect.top-paddleHeight/2;
+      });
+      canvas.addEventListener("mouseenter",()=>active=true);
+      canvas.addEventListener("mouseleave",()=>active=false);
+    }
+
+    // Tema
+    const themeToggle=document.getElementById('themeToggle');
+    themeToggle.addEventListener('click',()=>{
+      document.body.classList.toggle('light');
+      document.body.classList.toggle('dark');
+      themeToggle.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+    });
+    // Tradução
+    const langSwitch=document.getElementById('langSwitch');
+    let lang="pt";
+    langSwitch.addEventListener('click',()=>{
+      lang=lang==="pt"?"en":"pt";
+      document.getElementById("nome").textContent=lang==="pt"?"J Tito Neto":"J Tito Neto";
+      document.getElementById("descricao").textContent=lang==="pt"?"Estudante de Engenharia de Software • Desenvolvedor Fullstack":"Software Engineering Student • Fullstack Developer";
+      document.getElementById("apresentacaoTitulo").textContent=lang==="pt"?"Apresentação":"Presentation";
+      document.getElementById("apresentacaoTexto").textContent=lang==="pt"?"Eu sou um sonhador, um visionário, alguém que cria mundos em sua mente, que cria histórias em segundos e que ama navegar pelo desconhecido concebendo uma ideia mais insana que a outra. Mas, certamente, ser platônico demais foi o meu erro. Antes de conhecer de fato a programação eu achava que tudo era fácil, que tudo que eu vislumbrava poderia ser materializado no dia seguinte por mim, não que não seja, não obstante, não posso ser tão pueril assim, tudo tem um meio e um fim, fundamentos, estruturas, conceitos e axiomas. O materialismo de apenas uma linha de código me mostrou que para dar vida às minhas ideias eu precisarei primeiro colocar a mão na massa e, sem sombra de dúvidas, terei que me esforçar ao máximo para dominar a programação orientada a objetos.":"I am a dreamer, a visionary, someone who creates worlds in their mind, who creates stories in seconds and who loves to navigate the unknown, conceiving one idea crazier than the other. But, certainly, being too platonic was my mistake. Before truly getting to know programming, I thought everything was easy, that everything I envisioned could be materialized the next day by me—not that it isn't—but nonetheless, I cannot be so naive, everything has a means and an end, foundations, structures, concepts, and axioms. The materiality of just a single line of code showed me that to bring my ideas to life, I will first need to get hands-on, and without a doubt, I will have to give my utmost effort to master object-oriented programming.";
+      langSwitch.textContent=lang==="pt"?"PT | EN":"EN | PT";
+    });
+  </script>
+</body>
+</html>
+
+
