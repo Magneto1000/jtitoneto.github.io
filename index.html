@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.6" />
   <title>Portfólio - Projetos com Imagens</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -162,19 +162,20 @@
               <p>Interfaces intuitivas e design centrado no usuário.</p>
               <div class="project-section">
                 <div class="project">
-                  <h3>Projeto 1 – App Educacional</h3>
-                  <p>Protótipo no Figma para ensino interativo de ciências.</p>
-                  <img src="ux1.jpg" alt="Imagem do Projeto 1 UX">
+                  <h3>Projeto 1 – Game MAGMAN</h3>
+                  <p>Protótipo Lo-fi parcial no Figma.</p>
+                  <img src="ux1.jpg" alt="Imagem do Game Magman">
+                  <a href="https://www.figma.com/proto/WKzSaE7EvlWsvMx0AyjZUJ/MAGMAN?node-id=0-1&t=ZbbrNH4M5LzlMlTc-1" target="_blank" rel="noopener noreferrer">Abrir a Wikipédia em nova aba</a>
                 </div>
                 <div class="project">
-                  <h3>Projeto 2 – Dashboard de Saúde</h3>
-                  <p>Interface para monitoramento de dados biométricos.</p>
-                  <img src="ux2.jpg" alt="Imagem do Projeto 2 UX">
+                  <h3>Projeto 2 – Dashboard do app de tarefas gamificado Over Power</h3>
+                  <p>Interface para monitoramento de tarefas em sistema gamificado.</p>
+                  <img src="ux2.jpg" alt="Imagem do app Over Power">
                 </div>
                 <div class="project">
                   <h3>Projeto 3 – Plataforma CityZem</h3>
                   <p>Design voltado à conscientização política da sociedade.</p>
-                  <img src="ux3.jpg" alt="Imagem do Projeto 3 UX">
+                  <img src="ux3.jpg" alt="Imagem do app CityZem">
                 </div>
               </div>`;
             break;
@@ -284,6 +285,8 @@
         resposta = "Sou casado e possuo uma filha. Minha esposa se chama Thayná e minha filha Julia.";
       } else if (pergunta.includes("Salário") || pergunta.includes("salário") || pergunta.includes("salarial") || pergunta.includes("remuneração")) {
         resposta = "Eu gostaria de dizer que aceito quanto você estiver disposto a pagar, mas como tenho uma família para sustentar, acredito que a média do mercado para a minha vaga, ou negociamos.";
+      } else if (pergunta.includes("UX") || pergunta.includes("ux") || pergunta.includes("UX design") || pergunta.includes("Design") || pergunta.includes("design") || pergunta.includes("criatividade") || pergunta.includes("criatividade"));
+        resposta = "Eu estou em constante processo de aperfeiçoamento no refinamento dos meus processos criativos. Os meus conhecimentos de UX, sobretudo, relacionados a priorização do usuário me ajudou a entender melhor como construir produtos, como projetá-los, como dar vida as minhas ideias.";
       }
 
       respostaEl.textContent=resposta;
@@ -357,5 +360,6 @@
   </script>
 </body>
 </html>
+
 
 
