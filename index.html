@@ -1,105 +1,213 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.6" />
-  <title>Portfólio - Projetos com Imagens</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tito Neto | UX Portfolio</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial; transition:background 0.3s,color 0.3s}
+    /* =========================================
+       1. VARIÁVEIS E RESET (CSS GLOBAL)
+       ========================================= */
+    :root {
+      /* Paleta de Cores (Estilo Code 1) */
+      --primary: #6366f1; /* Indigo Vibrante */
+      --primary-hover: #4f46e5;
+      
+      --bg-light: #f3f4f6;
+      --card-light: #ffffff;
+      --text-light: #111827;
+      --text-muted-light: #6b7280;
+      --border-light: #e5e7eb;
+      
+      --bg-dark: #0f172a; /* Slate Dark */
+      --card-dark: #1e293b;
+      --text-dark: #f8fafc;
+      --text-muted-dark: #94a3b8;
+      --border-dark: #334155;
+      
+      --radius: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }
+
+    /* =========================================
+       2. TEMAS (CLARO / ESCURO)
+       ========================================= */
+    body.light { background: var(--bg-light); color: var(--text-light); }
+    body.light .sidebar, body.light .hero, body.light .overlay-content, body.light .btn-icon {
+      background: var(--card-light); border: 1px solid var(--border-light); color: var(--text-light);
+    }
+    body.light .text-muted { color: var(--text-muted-light); }
+
+    body.dark { background: var(--bg-dark); color: var(--text-dark); }
+    body.dark .sidebar, body.dark .hero, body.dark .overlay-content, body.dark .btn-icon {
+      background: var(--card-dark); border: 1px solid var(--border-dark); color: var(--text-dark);
+    }
+    body.dark .text-muted { color: var(--text-muted-dark); }
+
+    /* =========================================
+       3. LAYOUT PRINCIPAL (GRID)
+       ========================================= */
+    .app { 
+      display: grid; 
+      grid-template-columns: 280px 1fr; 
+      max-width: 1400px; 
+      margin: 0 auto; 
+      gap: 32px; 
+      padding: 32px;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: sticky; top: 32px; height: calc(100vh - 64px);
+      border-radius: var(--radius); padding: 32px 24px;
+      display: flex; flex-direction: column; box-shadow: var(--shadow);
+    }
+    .brand { font-size: 24px; font-weight: 800; margin-bottom: 40px; color: var(--primary); letter-spacing: -1px; text-align: center; }
+
+    /* Navegação */
+    .nav-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .nav-item {
+      padding: 12px 16px; border-radius: 12px; cursor: pointer;
+      font-weight: 600; font-size: 14px; transition: var(--transition);
+      border: 1px solid transparent; opacity: 0.8;
+    }
+    .nav-item:hover { opacity: 1; background: var(--primary); color: white; transform: translateX(5px); box-shadow: var(--shadow); }
+    .nav-item.big { margin-top: 20px; font-weight: 800; border: 1px dashed var(--primary); color: var(--primary); opacity: 1; text-align: center; }
+    .nav-item.big:hover { border-style: solid; }
+
+    /* Topbar (Botões flutuantes) */
+    .topbar { position: fixed; top: 32px; right: 32px; display: flex; gap: 12px; z-index: 100; }
+    .btn-icon {
+      padding: 10px 16px; border-radius: 12px; cursor: pointer;
+      transition: var(--transition); font-weight: 700; font-size: 14px;
+    }
+    .btn-icon:hover { transform: scale(1.05); border-color: var(--primary); color: var(--primary); }
+
+    /* =========================================
+       4. CONTEÚDO PRINCIPAL (HERO & TEXTOS)
+       ========================================= */
+    .main { display: flex; flex-direction: column; gap: 24px; }
     
-    /* Tema claro */
-    body.light{background:#f7f7f7;color:#222}
-    body.light .sidebar, 
-    body.light .hero,
-    body.light .presentation,
-    body.light .overlay-content,
-    body.light footer{background:#fff;border:1px solid #150101;color:#222}
-    body.light .nav-item{background:linear-gradient(180deg,#adaaaa,#f0f0f0)}
+    .hero {
+      padding: 40px; border-radius: 24px; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .hero-top { display: flex; gap: 32px; align-items: center; flex-wrap: wrap; }
+    
+    .avatar { 
+      width: 130px; height: 130px; border-radius: 50%; overflow: hidden; 
+      border: 4px solid var(--primary); box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .hero-info h1 { font-size: 32px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
+    .hero-info p { font-size: 18px; color: var(--primary); font-weight: 600; }
 
-    /* Tema escuro */
-    body.dark{background:#0f0f0f;color:#eee}
-    body.dark .sidebar, 
-    body.dark .hero,
-    body.dark .presentation,
-    body.dark .overlay-content,
-    body.dark footer{background:#1a1a1a;border:1px solid #333;color:#eee}
-    body.dark .nav-item{background:linear-gradient(180deg,#222,#111)}
+    .presentation { line-height: 1.8; font-size: 16px; opacity: 0.9; max-width: 800px; }
+    .presentation h2 { margin-bottom: 16px; font-size: 22px; color: var(--primary); }
 
-    .app{display:grid;grid-template-columns:260px 1fr;min-height:100vh;gap:24px;padding:24px}
-    .sidebar{border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:10px;height:calc(100vh - 48px);overflow:auto}
-    .brand{font-weight:700;font-size:18px;padding:8px 4px;text-align:center}
+    /* Footer */
+    footer { padding: 32px; text-align: center; }
+    .socials { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+    .social-link {
+      padding: 10px 20px; border-radius: 50px; background: rgba(99, 102, 241, 0.1);
+      color: var(--primary); text-decoration: none; font-weight: 700; font-size: 14px;
+      transition: var(--transition);
+    }
+    .social-link:hover { background: var(--primary); color: white; transform: translateY(-3px); }
 
-    .nav-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-    .nav-item{padding:12px 10px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;transition:0.2s}
-    .nav-item.big{font-size:20px;padding:18px 10px}
-    .nav-item:hover{box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+    /* =========================================
+       5. OVERLAY, PROJETOS & INTERATIVIDADE
+       ========================================= */
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+      display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px;
+    }
+    .overlay.show { display: flex; animation: fadeIn 0.3s ease; }
+    
+    .overlay-content {
+      border-radius: 24px; max-width: 900px; width: 100%; padding: 40px;
+      position: relative; max-height: 90vh; overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    }
+    .btn-close {
+      position: absolute; top: 20px; right: 20px; padding: 8px 16px;
+      border-radius: 8px; border: none; cursor: pointer;
+      background: var(--primary); color: white; font-weight: bold;
+    }
 
-    .topbar{position:fixed;top:10px;right:20px;display:flex;gap:10px;align-items:center;z-index:1000}
-    .lang-switch,.theme-toggle{border:1px solid #ddd;padding:6px 8px;border-radius:6px;cursor:pointer;background:#fff}
-    body.dark .lang-switch, body.dark .theme-toggle{background:#222;border:1px solid #444;color:#eee}
+    /* Grid de Projetos */
+    .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 24px; }
+    .project-card { 
+      padding: 20px; border-radius: 16px; transition: var(--transition);
+      background: rgba(128, 128, 128, 0.05); border: 1px solid transparent;
+    }
+    body.dark .project-card { border: 1px solid var(--border-dark); }
+    body.light .project-card { border: 1px solid var(--border-light); }
+    
+    .project-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--shadow); }
+    .project-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 16px; background: #333; }
+    .project-card h3 { font-size: 18px; margin-bottom: 8px; color: var(--primary); }
+    .project-card p { font-size: 14px; opacity: 0.8; line-height: 1.5; }
 
-    .main{display:flex;flex-direction:column;gap:12px}
-    .hero{border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px}
-    .hero-top{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
-    .avatar{width:160px;height:160px;border-radius:50%;overflow:hidden}
-    .avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-    .hero-info h1{font-size:22px;margin-bottom:6px}
-    .presentation{border-radius:12px;padding:18px;min-height:140px}
+    /* Estilos do Chat */
+    .chat-container { display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto; }
+    .chat-display { 
+      background: rgba(0,0,0,0.05); padding: 20px; border-radius: 12px; min-height: 150px; 
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      font-style: italic; border: 1px dashed var(--primary);
+    }
+    .chat-input-group { display: flex; gap: 10px; }
+    .chat-input { 
+      flex: 1; padding: 12px; border-radius: 8px; border: 2px solid var(--border-light); 
+      background: transparent; color: inherit; 
+    }
+    body.dark .chat-input { border-color: var(--border-dark); }
+    .chat-input:focus { outline: none; border-color: var(--primary); }
+    .btn-chat { padding: 0 20px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
-    .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:1000;padding:20px}
-    .overlay-content{border-radius:12px;max-width:800px;width:100%;padding:20px;position:relative;overflow-y:auto;max-height:90vh}
-    .overlay.show{display:flex}
-    .overlay-content button{position:absolute;top:10px;right:10px;padding:5px 10px;border-radius:6px;cursor:pointer;border:none}
+    /* Estilos do Game */
+    #pingPong { 
+      display: block; margin: 20px auto; background: #000; border: 4px solid #333; 
+      border-radius: 8px; max-width: 100%; cursor: none;
+    }
+    #scoreBoard { text-align: center; font-size: 2rem; font-weight: 800; color: var(--primary); font-family: monospace; }
 
-    /* Projetos */
-    .project-section{margin-top:20px}
-    .project{margin-bottom:20px}
-    .project img{width:100%;max-width:500px;border-radius:8px;margin-top:10px}
-    .project p{margin-top:5px}
-
-    /* Chat */
-    .chat-window{display:flex;flex-direction:column;align-items:center;text-align:center}
-    .chat-window input{width:100%;max-width:400px;padding:10px;margin:10px 0;border:1px solid #aaa;border-radius:6px}
-    .chat-response{background:#eee;padding:12px;border-radius:8px;margin-top:10px;max-width:400px}
-    body.dark .chat-response{background:#333;color:#eee}
-
-    /* Jogo */
-    #pingPong{border:2px solid #000;display:block;margin:10px auto;background:#000}
-
-    /* Footer redes sociais */
-    footer{margin-top:20px;padding:15px;text-align:center;border-radius:8px}
-    .socials{display:flex;gap:15px;justify-content:center;flex-wrap:wrap}
-    .socials a{text-decoration:none;font-weight:600}
-    body.light .socials a{color:#222}
-    body.dark .socials a{color:#eee}
-
-    /* Responsividade */
-    @media (max-width:768px){
-      .app{grid-template-columns:1fr;padding:12px}
-      .sidebar{flex-direction:row;height:auto;justify-content:center}
-      .nav-list{flex-direction:row;flex-wrap:wrap;justify-content:center}
-      .hero-top{justify-content:center;text-align:center}
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    @media (max-width: 768px) {
+      .app { grid-template-columns: 1fr; padding: 16px; }
+      .sidebar { position: relative; height: auto; padding: 20px; }
+      .nav-list { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+      .topbar { position: absolute; top: 16px; right: 16px; }
+      .hero-top { justify-content: center; text-align: center; }
     }
   </style>
 </head>
 <body class="dark">
+
   <div class="topbar">
-    <div class="lang-switch" id="langSwitch">PT | EN</div>
-    <div class="theme-toggle" id="themeToggle">🌙</div>
+    <button class="btn-icon" id="langSwitch">PT | EN</button>
+    <button class="btn-icon" id="themeToggle">☀️</button>
   </div>
 
   <div class="app">
     <aside class="sidebar">
-      <div class="brand"></div>
-      <nav class="nav-list" id="navList">
-        <div class="nav-item" data-content="chat">CHAT</div>
-        <div class="nav-item" data-content="Projetos UX">EU NO UX/UI</div>
-        <div class="nav-item" data-content="Projetos Backend">EU NO BACKEND</div>
-        <div class="nav-item" data-content="Projetos Frontend">EU NO FRONTEND</div>
-        <div class="nav-item" data-content="Currículo">MEU CURRICULO</div>
-        <div class="nav-item big" data-content="game">DESAFIO</div>
+      <div class="brand">J TITO NETO.</div>
+      <nav class="nav-list">
+        <div class="nav-item" data-content="Projetos UX">PROJETOS UX</div>
+        <div class="nav-item" data-content="Projetos Backend">BACKEND</div>
+        <div class="nav-item" data-content="Projetos Frontend">FRONTEND</div>
+        <div class="nav-item" data-content="chat">CHAT (IA SIMULADA)</div>
+        <div class="nav-item" data-content="Currículo">CURRÍCULO</div>
+        <div class="nav-item big" data-content="game">O DESAFIO</div>
       </nav>
     </aside>
 
@@ -107,150 +215,208 @@
       <section class="hero">
         <div class="hero-top">
           <div class="avatar">
-            <img src="IMAGE PROFILE.jpg" alt="Foto de Juraci">
+            <img src="imagem-perfil.jpeg" alt="Foto de Tito">
           </div>
           <div class="hero-info">
             <h1 id="nome">J N Tito Neto</h1>
-            <p id="descricao">Estudante de Engenharia de Software • Desenvolvedor Fullstack</p>
+            <p id="descricao">Estudante de Engenharia de Software • UX DESIGN • Fullstack</p>
           </div>
         </div>
-        <div class="presentation">
+        <article class="presentation">
           <h2 id="apresentacaoTitulo">Apresentação</h2>
-          <p id="apresentacaoTexto">Eu sou um sonhador, um visionário, alguém que cria mundos em sua mente, que cria histórias em segundos e que ama navegar pelo desconhecido concebendo uma ideia mais insana que a outra. Mas, certamente, ser platônico demais foi o meu erro. Antes de conhecer de fato a programação eu achava que tudo era fácil, que tudo que eu vislumbrava poderia ser materializado no dia seguinte por mim, não que não seja, não obstante, não posso ser tão pueril assim, tudo tem um meio e um fim, fundamentos, estruturas, conceitos e axiomas. O materialismo de apenas uma linha de código me mostrou que para dar vida às minhas ideias eu precisarei primeiro colocar a mão na massa e, sem sombra de dúvidas, terei que me esforçar ao máximo para dominar a programação orientada a objetos.</p>
-        </div>
+          <p id="apresentacaoTexto" class="text-muted">
+            Eu sou um sonhador, um visionário, alguém que cria mundos em sua mente... Acho que sempre fui um UX design, porém me faltava metologia e antes de conhecer de fato a programação eu achava que tudo era fácil, mas o materialismo de apenas uma linha de código me mostrou que para dar vida às minhas ideias eu precisarei primeiro colocar a mão na massa e, sem sombra de dúvidas, terei que me esforçar ao máximo para ser um profissional que saiba unir o universo UX com a programação.
+          </p>
+        </article>
       </section>
 
       <footer>
-        <p>Minhas redes sociais</p>
+        <p class="text-muted" style="margin-bottom: 15px;">Conecte-se comigo:</p>
         <div class="socials">
-          <a href="https://github.com/Magneto1000" target="_blank" >GitHub</a>
-          <a href="https://www.linkedin.com/in/j-tito-neto-742385126/" target="_blank">LinkedIn</a>
-          <a href="mailto:titojneto@gmail.com" target="_blank" target="_blank">Email</a>
-          <a href="https://www.tiktok.com/@printdevjtitoneto?is_from_webapp=1&sender_device=pc" target="_blank">TikTok</a>
+          <a href="https://github.com/Magneto1000" target="_blank" class="social-link">GITHUB</a>
+          <a href="https://www.linkedin.com/in/j-tito-neto-742385126/" target="_blank" class="social-link">LINKEDIN</a>
+          <a href="mailto:titojneto@gmail.com" class="social-link">EMAIL</a>
+          <a href="https://www.tiktok.com/@printdevjtitoneto" target="_blank" class="social-link">TIKTOK</a>
         </div>
       </footer>
     </main>
   </div>
 
   <div class="overlay" id="overlay">
-    <div class="overlay-content" id="overlayContent">
-      <button onclick="closeOverlay()">FECHAR</button>
+    <div class="overlay-content">
+      <button class="btn-close" onclick="closeOverlay()">FECHAR</button>
       <div id="overlayText"></div>
     </div>
   </div>
 
   <script>
-    const overlay=document.getElementById('overlay');
-    const overlayText=document.getElementById('overlayText');
-    document.querySelectorAll('.nav-item').forEach(btn=>{
-      btn.addEventListener('click',()=>{
+    // --- 1. CONFIGURAÇÃO DE UI ---
+    const overlay = document.getElementById('overlay');
+    const overlayText = document.getElementById('overlayText');
+    const themeToggle = document.getElementById('themeToggle');
+    const langSwitch = document.getElementById('langSwitch');
+    
+    // --- 2. DADOS DE CONTEÚDO (HTML Strings) ---
+    // Projetos organizados para fácil edição
+    const conteudoProjetosUX = `
+      <h2>Projetos UX</h2>
+      <p class="text-muted">Projetos de interfaces intuitivas, gamificadas e design centrado no usuário.</p>
+      <div class="project-grid">
+        <div class="project-card">
+          <img src="magman_capa.png" alt="App Game Magman">
+          <h3>Game Magman</h3>
+          <p>Para conhecer mais visiste o portfolio no Figma:<br><a href="https://www.figma.com/design/WKzSaE7EvlWsvMx0AyjZUJ/MAGMAN?node-id=0-1&m=dev&t=JzujfVahKVetgwEI-1" target="_blank" rel="noopener noreferrer">Abrir a Wikipédia em nova aba</a></p>
+          <p>Protótipo no Figma de um game onde o protagonista viaja por planetas extraindo minérios magnetizados.</p>
+        </div>
+        <div class="project-card">
+          <img src="logo_claquette.jpeg" alt="App Claquette">
+          <h3>UX do aplicativo Claquette</h3>
+          <p>Para conhecer mais visiste o portfolio no Figma:<br><a href="https://www.figma.com/proto/H9VAPI1D9V4EnIOXqbgNtz/Wireframe-Claquette?t=ZbbrNH4M5LzlMlTc-1" target="_blank" rel="noopener noreferrer">Abrir a Wikipédia em nova aba</a></p>
+          <p>Protótipo lo-fi de uma app de trailers de filmes com opções avançadas de imersividade e imersividade.</p>
+        </div>
+        <div class="project-card">
+          <img src="logo_cityzem.png" alt="CityZem">
+          <h3>Plataforma CityZem</h3>
+          <p>Para conhecer mais visiste o portfolio no Figma:<br><a href="https://www.figma.com/proto/WurDztB7hlvhbDFag8WLq4/CITYZEM?t=ZbbrNH4M5LzlMlTc-1" target="_blank" rel="noopener noreferrer">Abrir a Wikipédia em nova aba</a></p>
+          <p>Design voltado à conscientização política da sociedade.</p>
+        </div>
+        <div class="project-card">
+          <img src="logo-over-power.jpeg" alt="Over Power">
+          <p>Para conhecer mais visiste o portfolio no Figma:<br><a href="https://www.figma.com/design/LR0RVY4gGsG1EgkGTFePWF/OVER-POWER?node-id=0-1&m=dev&t=ZbbrNH4M5LzlMlTc-1" target="_blank" rel="noopener noreferrer">Abrir a Wikipédia em nova aba</a></p>
+          <h3>App de gerenciamento de tarefas gamificado Over Power</h3>
+          <p>Projeto de um aplicativo de gerenciamento de tarefas com foco em micro-habitos e consistência: wireframes, storyboard e protótipo lo-fi.</p>
+        </div>
+      </div>`;
+
+    const conteudoBackend = `
+      <h2>Projetos Backend</h2>
+      <p class="text-muted">APIs robustas e sistemas seguros.</p>
+      <div class="project-grid">
+        <div class="project-card">
+          <img src="backend1.jpg" alt="API Tarefas">
+          <h3>API de Tarefas</h3>
+          <p>REST API em Node.js com MongoDB e JWT.</p>
+        </div>
+        <div class="project-card">
+          <img src="backend2.jpg" alt="Sistema Aluguel">
+          <h3>Sistema de Aluguel</h3>
+          <p>Aplicação Python com SQLite e Tkinter.</p>
+        </div>
+        <div class="project-card">
+          <img src="backend3.jpg" alt="API Iput">
+          <h3>API Iput</h3>
+          <p>Integração de dados ambientais para o projeto Clean City.</p>
+        </div>
+      </div>`;
+
+    const conteudoFrontend = `
+      <h2>Projetos Frontend</h2>
+      <p class="text-muted">Experiências visuais interativas.</p>
+      <div class="project-grid">
+        <div class="project-card">
+          <img src="frontend1.jpg" alt="Portfolio">
+          <h3>Portfólio Interativo</h3>
+          <p>Site pessoal com animações, modo escuro e multilíngue.</p>
+        </div>
+        <div class="project-card">
+          <img src="frontend2.jpg" alt="Sistema Solar">
+          <h3>Sistema Solar 2D</h3>
+          <p>Simulador educativo feito em JavaScript e Pygame.</p>
+        </div>
+        <div class="project-card">
+          <img src="frontend3.jpg" alt="App Gamificado">
+          <h3>App Gamificado</h3>
+          <p>Interface Android para gerenciamento de tarefas.</p>
+        </div>
+      </div>`;
+
+    // --- 3. EVENT LISTENER PRINCIPAL (NAVEGAÇÃO) ---
+    document.querySelectorAll('.nav-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const type = btn.dataset.content;
         overlay.classList.add('show');
-        switch(btn.dataset.content){
-          case "chat": abrirChat(); break;
-          case "game": abrirGame(); break;
+        
+        switch(type) {
+          case "Projetos UX": overlayText.innerHTML = conteudoProjetosUX; break;
+          case "Projetos Backend": overlayText.innerHTML = conteudoBackend; break;
+          case "Projetos Frontend": overlayText.innerHTML = conteudoFrontend; break;
+          
           case "Currículo":
-            overlayText.innerHTML=`
-              <h2>Currículo</h2>
-              <p><strong>Formação:</strong> Engenharia de Software (4º período)</p>
-              <p><strong>Experiência:</strong> Projetos em Python, Frontend e UX</p>
-              <p><a href="https://docs.google.com/document/d/1fugO-9jswBO_T2BRWygyC-qFXhPBlLQs/edit" target="_blank">📄 Ver Currículo em PDF</a></p>`;
-            break;
-
-          case "Projetos UX":
-            overlayText.innerHTML=`
-              <h2>Projetos UX</h2>
-              <p>Interfaces intuitivas e design centrado no usuário.</p>
-              <div class="project-section">
-                <div class="project">
-                  <h3>Projeto 1 – Game MAGMAN</h3>
-                  <p>Protótipo Lo-fi parcial no Figma.<br><a href="https://www.figma.com/proto/WKzSaE7EvlWsvMx0AyjZUJ/MAGMAN?node-id=0-1&t=ZbbrNH4M5LzlMlTc-1" target="_blank" rel="noopener noreferrer">Abrir a Wikipédia em nova aba</a></p>
-                  <img src="ux1.jpg" alt="Imagem do Game Magman">
-                </div>
-                <div class="project">
-                  <h3>Projeto 2 – Dashboard do app de tarefas gamificado Over Power</h3>
-                  <p>Interface para monitoramento de tarefas em sistema gamificado.</p>
-                  <img src="ux2.jpg" alt="Imagem do app Over Power">
-                </div>
-                <div class="project">
-                  <h3>Projeto 3 – Plataforma CityZem</h3>
-                  <p>Design voltado à conscientização política da sociedade.</p>
-                  <img src="ux3.jpg" alt="Imagem do app CityZem">
-                </div>
+            overlayText.innerHTML = `
+              <h2>Meu Currículo</h2>
+              <div style="margin-top:20px; line-height:1.8;">
+                <p><strong>Formação:</strong> Engenharia de Software (5º período)</p>
+                <p><strong>Papéis:</strong> Design de UX - PROGRAMADOR FULLSTACK</p>
+                <p><strong>Cursos:</strong> Google UX Design, Google Project Management, Python for Everybody (MIT)</p>
+                <p><strong>Experiência:</strong> Projetos em Python, Frontend, UX e Game Design.</p>
+                <br>
+                <a href="https://drive.google.com/file/d/1sM6VHSgJReIHLDJ76G8NEuAI_RmNRa7y/view?usp=sharing" target="_blank" class="social-link" style="color:white; background:var(--primary);">
+                   📄 Abrir PDF Completo
+                </a>
               </div>`;
             break;
 
-          case "Projetos Backend":
-            overlayText.innerHTML=`
-              <h2>Projetos Backend</h2>
-              <p>APIs robustas e sistemas com autenticação segura.</p>
-              <div class="project-section">
-                <div class="project">
-                  <h3>Projeto 1 – API de Tarefas</h3>
-                  <p>REST API em Node.js com MongoDB e autenticação JWT.</p>
-                  <img src="backend1.jpg" alt="Imagem do Projeto 1 Backend">
-                </div>
-                <div class="project">
-                  <h3>Projeto 2 – Sistema de Aluguel</h3>
-                  <p>Aplicação Python com banco de dados SQLite e interface Tkinter.</p>
-                  <img src="backend2.jpg" alt="Imagem do Projeto 2 Backend">
-                </div>
-                <div class="project">
-                  <h3>Projeto 3 – API Iput</h3>
-                  <p>Integração de dados ambientais para o projeto Iput.</p>
-                  <img src="backend3.jpg" alt="Imagem do Projeto 3 Backend">
+          case "chat":
+            overlayText.innerHTML = `
+              <h2>Converse com Tito (IA)</h2>
+              <div class="chat-container">
+                <p class="text-muted" style="text-align:center">Pergunte sobre: Formação, Projetos, Salário ou Skills.</p>
+                <div id="chatResposta" class="chat-display">Aguardando sua pergunta...</div>
+                <div class="chat-input-group">
+                  <input type="text" id="userQuestion" class="chat-input" placeholder="Ex: Quais suas skills?">
+                  <button class="btn-chat" onclick="responderPergunta()">ENVIAR</button>
                 </div>
               </div>`;
+            
+            // Adiciona listener para tecla Enter no input do chat
+            setTimeout(() => {
+                document.getElementById('userQuestion').addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') responderPergunta();
+                });
+            }, 100);
             break;
 
-          case "Projetos Frontend":
-            overlayText.innerHTML=`
-              <h2>Projetos Frontend</h2>
-              <p>Experiências interativas com HTML, CSS e JavaScript.</p>
-              <div class="project-section">
-                <div class="project">
-                  <h3>Projeto 1 – Portfólio Interativo</h3>
-                  <p>Site pessoal com animações, modo escuro e multilíngue.</p>
-                  <img src="frontend1.jpg" alt="Imagem do Projeto 1 Frontend">
-                </div>
-                <div class="project">
-                  <h3>Projeto 2 – Sistema Solar 2D</h3>
-                  <p>Simulador educativo feito em JavaScript e Pygame.</p>
-                  <img src="frontend2.jpg" alt="Imagem do Projeto 2 Frontend">
-                </div>
-                <div class="project">
-                  <h3>Projeto 3 – Aplicativo Gamificado</h3>
-                  <p>Interface para app Android de gerenciamento de tarefas com pontos e níveis.</p>
-                  <img src="frontend3.jpg" alt="Imagem do Projeto 3 Frontend">
-                </div>
-              </div>`;
+          case "game":
+            overlayText.innerHTML = `
+              <h2 style="text-align:center">Desafio Ping Pong</h2>
+              <p style="text-align:center" class="text-muted">Use o mouse para controlar a raquete da esquerda.</p>
+              <div id="scoreBoard">0 : 0</div>
+              <canvas id="pingPong" width="500" height="300"></canvas>
+            `;
+            setTimeout(iniciarPingPong, 200); // Pequeno delay para garantir que o canvas existe
             break;
 
-          default:
-            overlayText.textContent=btn.dataset.content;
+          default: overlayText.innerHTML = `<h2>${type}</h2><p>Conteúdo em desenvolvimento.</p>`;
         }
       });
     });
 
-    function closeOverlay(){overlay.classList.remove('show')}
+    function closeOverlay() { overlay.classList.remove('show'); }
 
-    // Chat funcional
-    function abrirChat(){
-      overlayText.innerHTML=`
-        <div class="chat-window">
-          <h2>Chat</h2>
-          <p>Faça uma pergunta sobre mim:</p>
-          <input type="text" id="userQuestion" placeholder="Pergunte aqui..." 
-            onkeypress="if(event.key==='Enter') responderPergunta()">
-          <div id="chatResposta" class="chat-response"></div>
-        </div>`;
-    }
+    // --- 4. LÓGICA DO CHAT (Portado do Code 2) ---
+    function responderPergunta() {
+      const input = document.getElementById('userQuestion');
+      const pergunta = input.value.toLowerCase();
+      const respostaEl = document.getElementById('chatResposta');
+      let resposta = "Desculpe, não entendi. Tente perguntar sobre formação, projetos ou contatos.";
 
-    function responderPergunta(){
-      const pergunta=document.getElementById('userQuestion').value.toLowerCase();
-      const respostaEl=document.getElementById('chatResposta');
-      let resposta="Desculpe, não entendi. Pergunte sobre minha formação, projetos ou contatos.";
-
-       if (pergunta.includes("formação") || pergunta.includes("faculdade")) {
+      if (pergunta.includes("formação") || pergunta.includes("faculdade")) {
+        resposta = "Estou cursando Engenharia de Software (4º período) e fiz cursos como Google Project Management.";
+      } else if (pergunta.includes("projetos")) {
+        resposta = "Desenvolvi simuladores, a plataforma Clean City e jogos educacionais.";
+      } else if (pergunta.includes("contato") || pergunta.includes("email")) {
+        resposta = "Email: titojneto@gmail.com | LinkedIn e GitHub estão no rodapé!";
+      } else if (pergunta.includes("nome")) {
+        resposta = "Me chamo J N Tito Neto, mas pode me chamar de Tito.";
+      } else if (pergunta.includes("idade")) {
+        resposta = "Tenho 33 anos (nascido em 1992).";
+      } else if (pergunta.includes("skills") || pergunta.includes("habilidades")) {
+        resposta = "Python, JS, UX Design, Gestão de Projetos e Liderança.";
+      } else if (pergunta.includes("salário") || pergunta.includes("remuneração")) {
+        resposta = "Como tenho família (esposa e filha), busco um valor justo de mercado, mas estou aberto a negociação.";
+      } else if (pergunta.includes("familia")) {
+        resposta = "Sou casado com a Thayná e temos uma filha chamada Julia.";
+      } else if (pergunta.includes("formação") || pergunta.includes("faculdade")) {
         resposta = "Estou cursando Engenharia de Software (4º período) e fiz cursos como Google Project Management e Python for Everybody do MIT.";
       } else if (pergunta.includes("projetos")) {
         resposta = "Desenvolvi simuladores educacionais em Python e um jogo interativo sobre o Sistema Solar. Também estou trabalhando no projeto Clean City e em estudos sobre a Mata Atlântica.";
@@ -284,82 +450,127 @@
         resposta = "Sou casado e possuo uma filha. Minha esposa se chama Thayná e minha filha Julia.";
       } else if (pergunta.includes("Salário") || pergunta.includes("salário") || pergunta.includes("salarial") || pergunta.includes("remuneração")) {
         resposta = "Eu gostaria de dizer que aceito quanto você estiver disposto a pagar, mas como tenho uma família para sustentar, acredito que a média do mercado para a minha vaga, ou negociamos.";
-      } else if (pergunta.includes("UX") || pergunta.includes("ux") || pergunta.includes("UX design") || pergunta.includes("Design") || pergunta.includes("design") || pergunta.includes("criatividade") || pergunta.includes("criatividade"));
+      } else if (pergunta.includes("UX") || pergunta.includes("ux") || pergunta.includes("UX design") || pergunta.includes("Design") || pergunta.includes("design") || pergunta.includes("criatividade") || pergunta.includes("criatividade")) {
         resposta = "Eu estou em constante processo de aperfeiçoamento no refinamento dos meus processos criativos. Os meus conhecimentos de UX, sobretudo, relacionados a priorização do usuário me ajudou a entender melhor como construir produtos, como projetá-los, como dar vida as minhas ideias.";
       }
 
-      respostaEl.textContent=resposta;
+
+      respostaEl.textContent = resposta;
+      respostaEl.style.borderColor = "var(--primary)";
+      respostaEl.style.color = "var(--primary)";
+      input.value = "";
     }
 
-    // Game
-    function abrirGame(){
-      overlayText.innerHTML=`
-        <h2>Ping Pong</h2>
-        <canvas id="pingPong" width="400" height="250"></canvas>
-        <div id="scoreBoard">0 : 0</div>`;
-      iniciarPingPong();
-    }
+    // --- 5. LÓGICA DO GAME (Portado do Code 2) ---
+    function iniciarPingPong() {
+      const canvas = document.getElementById('pingPong');
+      if (!canvas) return; // Segurança
+      const ctx = canvas.getContext('2d');
+      
+      let paddleHeight = 60, paddleWidth = 10;
+      let playerY = canvas.height / 2 - paddleHeight / 2;
+      let aiY = playerY;
+      let ballX = canvas.width / 2, ballY = canvas.height / 2;
+      let ballSize = 8, ballSpeedX = 4, ballSpeedY = 4;
+      let playerScore = 0, aiScore = 0;
+      let active = false; // Começa pausado
 
-    function iniciarPingPong(){
-      const canvas=document.getElementById('pingPong');
-      const ctx=canvas.getContext('2d');
-      let paddleHeight=40,paddleWidth=8;
-      let playerY=canvas.height/2-paddleHeight/2;
-      let aiY=playerY;
-      let ballX=canvas.width/2,ballY=canvas.height/2;
-      let ballSize=6,ballSpeedX=2,ballSpeedY=2;
-      let playerScore=0,aiScore=0,active=false;
-      function draw(){
-        ctx.fillStyle="black";ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle="white";
-        ctx.fillRect(10,playerY,paddleWidth,paddleHeight);
-        ctx.fillRect(canvas.width-10-paddleWidth,aiY,paddleWidth,paddleHeight);
-        ctx.beginPath();ctx.arc(ballX,ballY,ballSize,0,Math.PI*2);ctx.fill();
+      function draw() {
+        // Fundo e Elementos
+        ctx.fillStyle = "#111"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(10, playerY, paddleWidth, paddleHeight); // Player
+        ctx.fillRect(canvas.width - 10 - paddleWidth, aiY, paddleWidth, paddleHeight); // AI
+        
+        ctx.beginPath(); 
+        ctx.arc(ballX, ballY, ballSize, 0, Math.PI * 2); 
+        ctx.fillStyle = "var(--primary)"; // Bola colorida
+        ctx.fill();
+        ctx.fillStyle = "#fff"; // Reset cor
       }
-      function update(){
-        if(!active)return;
-        ballX+=ballSpeedX;ballY+=ballSpeedY;
-        if(ballY<0||ballY>canvas.height) ballSpeedY*=-1;
-        let aiCenter=aiY+paddleHeight/2;
-        if(aiCenter<ballY) aiY+=2; else aiY-=2;
-        if(ballX-ballSize<10+paddleWidth && ballY>playerY&&ballY<playerY+paddleHeight) ballSpeedX*=-1;
-        if(ballX+ballSize>canvas.width-10-paddleWidth && ballY>aiY&&ballY<aiY+paddleHeight) ballSpeedX*=-1;
-        if(ballX<0){aiScore++;resetBall();}
-        if(ballX>canvas.width){playerScore++;resetBall();}
-        document.getElementById("scoreBoard").textContent=`${playerScore} : ${aiScore}`;
+
+      function update() {
+        if (!active) return;
+        
+        ballX += ballSpeedX;
+        ballY += ballSpeedY;
+
+        // Paredes superior/inferior
+        if (ballY < 0 || ballY > canvas.height) ballSpeedY *= -1;
+
+        // IA Simples
+        let aiCenter = aiY + paddleHeight / 2;
+        if (aiCenter < ballY - 20) aiY += 3; else aiY -= 3;
+
+        // Colisões Raquetes
+        if (ballX - ballSize < 10 + paddleWidth && ballY > playerY && ballY < playerY + paddleHeight) {
+           ballSpeedX = Math.abs(ballSpeedX); // Rebate para direita
+        }
+        if (ballX + ballSize > canvas.width - 10 - paddleWidth && ballY > aiY && ballY < aiY + paddleHeight) {
+           ballSpeedX = -Math.abs(ballSpeedX); // Rebate para esquerda
+        }
+
+        // Pontuação
+        if (ballX < 0) { aiScore++; resetBall(); }
+        if (ballX > canvas.width) { playerScore++; resetBall(); }
+        
+        const scoreboard = document.getElementById("scoreBoard");
+        if(scoreboard) scoreboard.textContent = `${playerScore} : ${aiScore}`;
       }
-      function resetBall(){ballX=canvas.width/2;ballY=canvas.height/2;ballSpeedX*=-1}
-      setInterval(()=>{update();draw();},1000/60);
-      document.addEventListener("mousemove",e=>{
-        let rect=canvas.getBoundingClientRect();
-        playerY=e.clientY-rect.top-paddleHeight/2;
+
+      function resetBall() {
+        ballX = canvas.width / 2; ballY = canvas.height / 2;
+        ballSpeedX *= -1;
+      }
+
+      // Loop do jogo
+      const gameLoop = setInterval(() => {
+          if(document.getElementById('pingPong')) { // Só roda se o modal estiver aberto
+             update(); draw(); 
+          } else {
+             clearInterval(gameLoop);
+          }
+      }, 1000 / 60);
+
+      // Controles
+      canvas.addEventListener("mousemove", e => {
+        let rect = canvas.getBoundingClientRect();
+        playerY = e.clientY - rect.top - paddleHeight / 2;
       });
-      canvas.addEventListener("mouseenter",()=>active=true);
-      canvas.addEventListener("mouseleave",()=>active=false);
+      canvas.addEventListener("mouseenter", () => active = true);
+      canvas.addEventListener("mouseleave", () => active = false);
     }
 
-    // Tema
-    const themeToggle=document.getElementById('themeToggle');
-    themeToggle.addEventListener('click',()=>{
+    // --- 6. TEMA E IDIOMA ---
+    themeToggle.addEventListener('click', () => {
       document.body.classList.toggle('light');
       document.body.classList.toggle('dark');
-      themeToggle.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+      themeToggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
     });
-    // Tradução
-    const langSwitch=document.getElementById('langSwitch');
-    let lang="pt";
-    langSwitch.addEventListener('click',()=>{
-      lang=lang==="pt"?"en":"pt";
-      document.getElementById("nome").textContent=lang==="pt"?"J Tito Neto":"J Tito Neto";
-      document.getElementById("descricao").textContent=lang==="pt"?"Estudante de Engenharia de Software • Desenvolvedor Fullstack":"Software Engineering Student • Fullstack Developer";
-      document.getElementById("apresentacaoTitulo").textContent=lang==="pt"?"Apresentação":"Presentation";
-      document.getElementById("apresentacaoTexto").textContent=lang==="pt"?"Eu sou um sonhador, um visionário, alguém que cria mundos em sua mente, que cria histórias em segundos e que ama navegar pelo desconhecido concebendo uma ideia mais insana que a outra. Mas, certamente, ser platônico demais foi o meu erro. Antes de conhecer de fato a programação eu achava que tudo era fácil, que tudo que eu vislumbrava poderia ser materializado no dia seguinte por mim, não que não seja, não obstante, não posso ser tão pueril assim, tudo tem um meio e um fim, fundamentos, estruturas, conceitos e axiomas. O materialismo de apenas uma linha de código me mostrou que para dar vida às minhas ideias eu precisarei primeiro colocar a mão na massa e, sem sombra de dúvidas, terei que me esforçar ao máximo para dominar a programação orientada a objetos.":"I am a dreamer, a visionary, someone who creates worlds in their mind, who creates stories in seconds and who loves to navigate the unknown, conceiving one idea crazier than the other. But, certainly, being too platonic was my mistake. Before truly getting to know programming, I thought everything was easy, that everything I envisioned could be materialized the next day by me—not that it isn't—but nonetheless, I cannot be so naive, everything has a means and an end, foundations, structures, concepts, and axioms. The materiality of just a single line of code showed me that to bring my ideas to life, I will first need to get hands-on, and without a doubt, I will have to give my utmost effort to master object-oriented programming.";
-      langSwitch.textContent=lang==="pt"?"PT | EN":"EN | PT";
+
+    let currentLang = "pt";
+    langSwitch.addEventListener('click', () => {
+      currentLang = currentLang === "pt" ? "en" : "pt";
+      langSwitch.textContent = currentLang === "pt" ? "PT | EN" : "EN | PT";
+      
+      // Traduções Estáticas
+      const texts = {
+        pt: {
+          desc: "Estudante de Engenharia de Software • Fullstack",
+          title: "Apresentação",
+          text: "Eu sou um sonhador, um visionário... O materialismo de apenas uma linha de código me mostrou que para dar vida às minhas ideias eu precisarei colocar a mão na massa."
+        },
+        en: {
+          desc: "Software Engineering Student • Fullstack Developer",
+          title: "Presentation",
+          text: "I am a dreamer, a visionary, someone who creates worlds in their mind... I think I have always been a UX designer, but I lacked methodology, and before truly understanding programming, I thought everything was easy. However, the material reality of just one line of code showed me that to bring my ideas to life, I will first need to get my hands dirty, and, without a doubt, I will have to put in maximum effort to become a professional who knows how to merge the UX universe with programming.."
+        }
+      };
+      
+      document.getElementById("descricao").textContent = texts[currentLang].desc;
+      document.getElementById("apresentacaoTitulo").textContent = texts[currentLang].title;
+      document.getElementById("apresentacaoTexto").textContent = texts[currentLang].text;
     });
   </script>
 </body>
 </html>
-
-
-
-
