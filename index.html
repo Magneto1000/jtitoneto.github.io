@@ -33,6 +33,12 @@
       --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text-main); overflow-x: hidden; }
+        h1, h2, h3, .logo { font-family: 'Lexend', sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+    #particles-js { position: fixed; width: 100%; height: 100%; z-index: 1; top: 0; left: 0; pointer-events: none; }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }
 
@@ -157,6 +163,19 @@
     .project-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 16px; background: #333; }
     .project-card h3 { font-size: 18px; margin-bottom: 8px; color: var(--primary); }
     .project-card p { font-size: 14px; opacity: 0.8; line-height: 1.5; }
+    
+    p a {
+      color: #08f740;
+      text-decoration: none;
+      padding: 2px 4px; /* Espaço para o fundo não grudar no texto */
+      transition: 0.3s;  /* Deixa a mudança suave em vez de instantânea */
+    }
+    
+    p a:hover {
+      color: white;
+      background-color: #2980b9;
+      border-radius: 4px; /* Arredonda as pontas do destaque */
+    }
 
     /* Estilos do Chat */
     .chat-container { display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto; }
@@ -182,6 +201,14 @@
     #scoreBoard { text-align: center; font-size: 2rem; font-weight: 800; color: var(--primary); font-family: monospace; }
 
     @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    
+    /* Video */
+  .sidebar-video-container { margin-top: 20px; cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; border: 2px solid var(--primary); background: #000; transition: var(--transition); }
+  .sidebar-video-container:hover { transform: scale(1.03); box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); }
+  .sidebar-video-container video { width: 100%; display: block; opacity: 0.8; }
+  .video-hint { position: absolute; bottom: 0; background: rgba(99, 102, 241, 0.9); color: white; width: 100%; font-size: 10px; text-align: center; padding: 5px 0; font-weight: 800; }
+  .video-expanded { width: 100%; border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); } 
+  
     @media (max-width: 768px) {
       .app { grid-template-columns: 1fr; padding: 16px; }
       .sidebar { position: relative; height: auto; padding: 20px; }
@@ -192,7 +219,7 @@
   </style>
 </head>
 <body class="dark">
-
+  <div id="particles-js"></div>
   <div class="topbar">
     <button class="btn-icon" id="langSwitch">PT | EN</button>
     <button class="btn-icon" id="themeToggle">☀️</button>
@@ -200,7 +227,7 @@
 
   <div class="app">
     <aside class="sidebar">
-      <div class="brand">J TITO NETO.</div>
+      <div class="brand">JN TITO NETO.</div>
       <nav class="nav-list">
         <div class="nav-item" data-content="Projetos UX">PROJETOS UX</div>
         <div class="nav-item" data-content="Projetos Backend">BACKEND</div>
@@ -209,6 +236,13 @@
         <div class="nav-item" data-content="Currículo">CURRÍCULO</div>
         <div class="nav-item big" data-content="game">O DESAFIO</div>
       </nav>
+
+      <div class="sidebar-video-container" onclick="expandirVideo()" title="Clique para ampliar">
+        <video autoplay muted loop playsinline>
+            <source src="midias/video_de_apresentacao.mp4" type="video/mp4">
+        </video>
+        <div class="video-hint">AMPLIAR VÍDEO 🔍</div>
+      </div>
     </aside>
 
     <main class="main">
@@ -219,7 +253,7 @@
           </div>
           <div class="hero-info">
             <h1 id="nome">JN Tito Neto</h1>
-            <p id="descricao">Estudante de Engenharia de Software/Ciência da Cmputação • UX/UI DESIGN • Arquiteto de Software/Fullstack</p>
+            <p id="descricao">(Estudante de Engenharia de Software)<br> • UX/UI DESIGN<br> • Arquiteto de Software<br> • Desenvolvedor Fullstack</p>
           </div>
         </div>
         <article class="presentation">
@@ -233,10 +267,13 @@
         <p class="text-muted" style="margin-bottom: 15px;">Conecte-se comigo:</p>
         <div class="socials">
           <a href="https://github.com/Magneto1000" target="_blank" class="social-link">GITHUB</a>
-          <a href="www.linkedin.com/in/j-tito-742385126" target="_blank" class="social-link">LINKEDIN</a>
+          <a href="https://www.linkedin.com/in/jn-tito-neto-742385126" target="_blank" class="social-link">LINKEDIN</a>
           <a href="mailto:titojneto@gmail.com" class="social-link">EMAIL</a>
           <a href="https://www.tiktok.com/@printdevjtitoneto" target="_blank" class="social-link">TIKTOK</a>
         </div>
+        <br>
+        <br>
+        <p>© 2026 JN Tito | Desenvolvido com foco em Performance e UX</p>
       </footer>
     </main>
   </div>
@@ -247,7 +284,7 @@
       <div id="overlayText"></div>
     </div>
   </div>
-
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
     // --- 1. CONFIGURAÇÃO DE UI ---
     const overlay = document.getElementById('overlay');
@@ -262,26 +299,32 @@
       <p class="text-muted">Projetos de interfaces intuitivas, gamificadas e design centrado no usuário.</p>
       <div class="project-grid">
         <div class="project-card">
-          <img src="magman_capa.png" alt="App Game Magman">
+          <img src="midias/ux/tela_capa_claquette.png" alt="O usuário sempre vem em primeiro lugar">
+          <p>Para conhecer mais visiste o portfolio completo (pesquisas de usuário, storyboards, personas, etc) e protótipo hi-fi na pasta do Google Drive e no Figma:<br><a href="https://drive.google.com/drive/folders/1sG1bnyiVLDbxxEx1EpuP5GRp0dvqJ9-9?usp=sharing" target="_blank" rel="noopener noreferrer">Pasta do Projeto</a> <br><a href="https://www.figma.com/proto/H9VAPI1D9V4EnIOXqbgNtz/Wireframe-Claquette?node-id=213-171&t=ifNk85fhUPk1c7uQ-1&scaling=scale-down&content-scaling=fixed&page-id=213%3A51&starting-point-node-id=240%3A41&show-proto-sideba=1r" target="_blank" rel="noopener noreferrer"> Protótipo de alta fidelidade Figma</a></p>
+          <h3>Protótipo hi-fi do aplicativo de treilers chamado CLAQUETTE. Desenvolvido como parte da formação de UX Designer do Programa de formaçã ode Designer de UX do Google</h3>
+          <p>Projeto de um aplicativo de criando seguindo os principios do design e centralizado no usuário. Foram realizados testes de usabilidade em duas fases para obter insigths e por fim iterar no protótipo.</p>
+        </div>
+        <div class="project-card">
+          <img src="midias/ux/magman_capa.png" alt="App Game Magman">
           <h3>Game Magman</h3>
-          <p>Para conhecer mais visiste o portfolio no Figma:<br><a href="https://www.figma.com/design/WKzSaE7EvlWsvMx0AyjZUJ/MAGMAN?node-id=0-1&m=dev&t=JzujfVahKVetgwEI-1" target="_blank" rel="noopener noreferrer">Abrir a Wikipédia em nova aba</a></p>
+          <p>Para conhecer mais visiste o portfolio no Figma:<br><a href="https://www.figma.com/design/WKzSaE7EvlWsvMx0AyjZUJ/MAGMAN?node-id=0-1&m=dev&t=JzujfVahKVetgwEI-1" target="_blank" rel="noopener noreferrer">Protótipo de alta fidelidade Figma</a></p>
           <p>Protótipo no Figma de game em 2D, onde o protagonista viaja por planetas extraindo minérios magnetizados.</p>
         </div>
         <div class="project-card">
-          <img src="logo_claquette.jpeg" alt="App Claquette">
+          <img src="midias/ux/logo_claquette.jpeg" alt="App Claquette">
           <h3>UX do aplicativo Claquette</h3>
-          <p>Para conhecer mais visiste o portfolio no Figma:<br><a href="https://www.figma.com/proto/H9VAPI1D9V4EnIOXqbgNtz/Wireframe-Claquette?t=ZbbrNH4M5LzlMlTc-1" target="_blank" rel="noopener noreferrer">Abrir a Wikipédia em nova aba</a></p>
+          <p>Para conhecer mais visiste o portfolio no Figma:<br><a href="https://www.figma.com/proto/H9VAPI1D9V4EnIOXqbgNtz/Wireframe-Claquette?t=ZbbrNH4M5LzlMlTc-1" target="_blank" rel="noopener noreferrer">Protótipo de alta fidelidade Figma</a></p>
           <p>Protótipo lo-fi, hi-fi e Mockup de app de trailers de filmes com opções avançadas de imersividade e imersividade.</p>
         </div>
         <div class="project-card">
-          <img src="logo_cityzem.png" alt="CityZem">
+          <img src="midias/ux/logo_cityzem.png" alt="CityZem">
           <h3>Plataforma CityZem</h3>
-          <p>Para conhecer mais visiste o portfolio no Figma:<br><a href="https://www.figma.com/proto/WurDztB7hlvhbDFag8WLq4/CITYZEM?t=ZbbrNH4M5LzlMlTc-1" target="_blank" rel="noopener noreferrer">Abrir a Wikipédia em nova aba</a></p>
+          <p>Para conhecer mais visiste o portfolio no Figma:<br><a href="https://www.figma.com/proto/WurDztB7hlvhbDFag8WLq4/CITYZEM?t=ZbbrNH4M5LzlMlTc-1" target="_blank" rel="noopener noreferrer">Protótipo de alta fidelidade Figma</a></p>
           <p>Design voltado à conscientização política da sociedade.</p>
         </div>
         <div class="project-card">
-          <img src="logo-over-power.jpeg" alt="Over Power">
-          <p>Para conhecer mais visiste o portfolio no Figma:<br><a href="https://www.figma.com/design/LR0RVY4gGsG1EgkGTFePWF/OVER-POWER?node-id=0-1&m=dev&t=ZbbrNH4M5LzlMlTc-1" target="_blank" rel="noopener noreferrer">Abrir a Wikipédia em nova aba</a></p>
+          <img src="midias/ux/logo-over-power.jpeg" alt="Over Power">
+          <p>Para conhecer mais visiste o portfolio no Figma:<br><a href="https://www.figma.com/design/LR0RVY4gGsG1EgkGTFePWF/OVER-POWER?node-id=0-1&m=dev&t=ZbbrNH4M5LzlMlTc-1" target="_blank" rel="noopener noreferrer">Protótipo de alta fidelidade Figma</a></p>
           <h3>App de gerenciamento de tarefas gamificado Over Power</h3>
           <p>Projeto de um aplicativo de gerenciamento de tarefas com foco em micro-habitos e consistência: wireframes, storyboard e protótipo lo-fi.</p>
         </div>
@@ -349,7 +392,7 @@
                 <p><strong>Cursos:</strong> Google UX Design, Google Project Management, Python for Everybody (MIT)</p>
                 <p><strong>Experiência:</strong> Projetos em Python, Frontend, UX e Game Design.</p>
                 <br>
-                <a href="https://drive.google.com/file/d/1pBCn3-oflAMpPz5E0HwlEnVa5b7W0frx/view?usp=drive_link" target="_blank" class="social-link" style="color:white; background:var(--primary);">
+                <a href="https://docs.google.com/document/d/19m4qa0B_NJjl4Bd5U7zfExo03Q2_hau6/edit?usp=drive_link&ouid=107472219722631581930&rtpof=true&sd=true" target="_blank" class="social-link" style="color:white; background:var(--primary);">
                    📄 Abrir PDF Completo
                 </a>
               </div>`;
@@ -449,6 +492,8 @@
         resposta = "Sou casado e possuo uma filha. Minha esposa se chama Thayná e minha filha Julia.";
       } else if (pergunta.includes("Salário") || pergunta.includes("salário") || pergunta.includes("salarial") || pergunta.includes("remuneração")) {
         resposta = "Eu gostaria de dizer que aceito quanto você estiver disposto a pagar, mas como tenho uma família para sustentar, acredito que a média do mercado para a minha vaga, ou negociamos.";
+      } else if (pergunta.includes("oi") || pergunta.includes("Oi") || pergunta.includes("história") || pergunta.includes("sonhos") || pergunta.includes("sonho")) {
+        resposta = "Oi! Meu maior sonhos é conseguir materializar os meus projetos e usá-los para ajudar o maior número de pessoas possível.";
       } else if (pergunta.includes("UX") || pergunta.includes("ux") || pergunta.includes("UX design") || pergunta.includes("Design") || pergunta.includes("design") || pergunta.includes("criatividade") || pergunta.includes("criatividade")) {
         resposta = "Eu estou em constante processo de aperfeiçoamento no refinamento dos meus processos criativos. Os meus conhecimentos de UX, sobretudo, relacionados a priorização do usuário me ajudou a entender melhor como construir produtos, como projetá-los, como dar vida as minhas ideias.";
       }
@@ -570,6 +615,47 @@
       document.getElementById("apresentacaoTitulo").textContent = texts[currentLang].title;
       document.getElementById("apresentacaoTexto").textContent = texts[currentLang].text;
     });
+  // --- NOVO: Lógica de controle do vídeo ---
+
+  // Abre o overlay e injeta o vídeo com controles de som/player
+  function expandirVideo() {
+    const overlay = document.getElementById('overlay');
+    const overlayText = document.getElementById('overlayText');
+    
+    overlay.classList.add('show');
+    overlayText.innerHTML = `
+    <h2 style="text-align:center; margin-bottom:20px;">Apresentação</h2>
+    <video class="video-expanded" controls autoplay>
+      <source src="midias/video_de_apresentacao.mp4" type="video/mp4">
+    </video>
+    `;
+    }
+    
+    // Sobrescreva ou adicione esta lógica ao seu closeOverlay existente
+    // para garantir que o som pare ao fechar
+    function closeOverlay() {
+    const overlay = document.getElementById('overlay');
+    const overlayText = document.getElementById('overlayText');
+    const video = overlayText.querySelector('video');
+    
+    if (video) video.pause(); // Garante que o som do vídeo pare
+    overlay.classList.remove('show');
+    overlayText.innerHTML = ""; // Limpa a memória do modal
+    }
+
+    particlesJS("particles-js", {
+      "particles": {
+          "number": { "value": 40 },
+          "color": { "value": "#00e5ff" },
+          "shape": { "type": "circle" },
+          "opacity": { "value": 0.2 },
+          "size": { "value": 2 },
+          "line_linked": { "enable": true, "distance": 150, "color": "#00e5ff", "opacity": 0.1, "width": 1 },
+          "move": { "enable": true, "speed": 1.5 }
+      },
+      "interactivity": { "events": { "onhover": { "enable": true, "mode": "repulse" } } }
+  });
+  
   </script>
 </body>
 </html>
